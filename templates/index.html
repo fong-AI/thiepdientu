@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp mời tốt nghiệp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            overflow: hidden;
+        }
+        .frame-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        /* Animation zoom cho frame 1 */
+        #frame1 .frame-bg {
+            animation: zoomInBg 8s ease-in-out infinite;
+        }
+        @keyframes zoomInBg {
+            0% { transform: scale(1); }
+            80% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        .frame-overlay {
+            display: none;
+        }
+        .main-card, .intro-card, .gallery-card {
+            background: rgba(255,255,255,0.92);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 900px;
+        }
+        /* Giảm độ trắng main-card frame 1, làm trong suốt */
+        #frame1 .main-card {
+            background: transparent;
+            box-shadow: none;
+        }
+        /* Tăng cỡ, font, màu cho tên chủ nhân frame 1 */
+        #frame1 .invite-subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #fff;
+            text-transform: capitalize;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        .invite-section {
+            text-align: center;
+            padding: 48px 20px 32px 20px;
+        }
+        .invite-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 0.2em;
+            letter-spacing: 2px;
+        }
+        .invite-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: #222;
+            margin-bottom: 0.5em;
+            letter-spacing: 1px;
+        }
+        .invite-desc {
+            font-size: 1.1em;
+            color: #fff;
+            background: rgba(74,144,226,0.7);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 12px;
+            margin-bottom: 1.5em;
+        }
+        .date-block {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin: 1.5em 0 1em 0;
+        }
+        .date-item {
+            background: rgba(255,255,255,0.85);
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 18px 24px;
+            min-width: 80px;
+            text-align: center;
+        }
+        .date-item .label {
+            font-size: 1em;
+            color: #4a90e2;
+            font-family: 'Roboto', sans-serif;
+        }
+        .date-item .value {
+            font-size: 2.2em;
+            font-family: 'Playfair Display', serif;
+            color: #222;
+            font-weight: bold;
+        }
+        .location-block {
+            margin: 1.5em 0 2em 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+        .location-block .label {
+            font-weight: 500;
+            color: #4a90e2;
+        }
+        .owner-block {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: #4a90e2;
+            margin-bottom: 1.5em;
+        }
+        .block {
+            background: rgba(255,255,255,0.85);
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            margin: 0 auto 24px auto;
+            padding: 24px 16px 16px 16px;
+            max-width: 400px;
+        }
+        .block-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3em;
+            color: #ffd700;
+            margin-bottom: 0.5em;
+        }
+        .btn-main {
+            background: linear-gradient(90deg, #ffd700 60%, #4a90e2 100%);
+            color: #2c3e50;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 24px;
+            font-size: 1em;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+        .btn-main:hover {
+            background: linear-gradient(90deg, #e6c200 60%, #357abd 100%);
+            color: #fff;
+        }
+        .rsvp-form input, .rsvp-form select {
+            border-radius: 10px;
+        }
+        /* Frame 2: Giới thiệu bản thân */
+        .intro-card {
+            padding: 48px 20px 48px 20px;
+            text-align: center;
+        }
+        .intro-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: #ffd700;
+            margin-bottom: 0.5em;
+        }
+        .intro-caption {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3em;
+            color: #333;
+            background: rgba(255,255,255,0.8);
+            display: inline-block;
+            padding: 18px 32px;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            margin-bottom: 1.5em;
+        }
+        /* Frame 3: Gallery */
+        #frame3 .gallery-card {
+            width: 100vw;
+            max-width: 100vw;
+            background: transparent;
+            box-shadow: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            left: 0;
+        }
+        .gallery-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: #ffd700;
+            margin-bottom: 0.5em;
+            text-align: center;
+            width: 100%;
+        }
+        .gallery-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+        }
+        .gallery-img {
+            width: 220px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+            background: #eee;
+        }
+        .scroll-down {
+            position: absolute;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            z-index: 10;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .scroll-down:hover {
+            background: #ffd700;
+        }
+        .scroll-down svg {
+            width: 28px;
+            height: 28px;
+            color: #4a90e2;
+        }
+        @media (max-width: 991.98px) {
+            .invite-title { font-size: 1.5em; }
+            .invite-subtitle { font-size: 1.2em; }
+            .date-block { gap: 10px; }
+            .date-item { padding: 10px 8px; min-width: 60px; }
+            .owner-block { font-size: 1.2em; }
+            .gallery-img { width: 120px; height: 180px; }
+        }
+        .door {
+            position: fixed;
+            top: 0;
+            width: 50vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 9999;
+            transition: transform 1.5s cubic-bezier(.77,0,.18,1);
+            box-shadow: 0 0 30px 10px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+        .door-left {
+            left: 0;
+            border-right: 2px solid #b8860b;
+            transform: translateX(0);
+        }
+        .door-right {
+            right: 0;
+            border-left: 2px solid #b8860b;
+            transform: translateX(0);
+        }
+        .doors-open .door-left {
+            transform: translateX(-100%);
+        }
+        .doors-open .door-right {
+            transform: translateX(100%);
+        }
+        /* Gallery slider frame 3 - 3 ảnh chiếm 90% chiều rộng, slide mượt */
+        #frame3 .gallery-list {
+            width: 100vw;
+            height: 80vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #frame3 .gallery-track {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(.77,0,.18,1);
+            will-change: transform;
+            height: 100%;
+            width: 100vw;
+        }
+        #frame3 .gallery-img {
+            flex: 0 0 30vw;
+            width: 30vw;
+            height: 70vh;
+            max-width: 30vw;
+            max-height: 70vh;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+            margin: 0 1vw;
+            background: none;
+            border: none;
+            opacity: 1;
+            transition: box-shadow 0.3s;
+        }
+        #frame3 .gallery-img.center {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+        }
+        .scroll-down {
+            position: absolute;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            z-index: 10;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .scroll-down:hover {
+            background: #ffd700;
+        }
+        .scroll-down svg {
+            width: 28px;
+            height: 28px;
+            color: #4a90e2;
+        }
+        @media (max-width: 991.98px) {
+            .invite-title { font-size: 1.5em; }
+            .invite-subtitle { font-size: 1.2em; }
+            .date-block { gap: 10px; }
+            .date-item { padding: 10px 8px; min-width: 60px; }
+            .owner-block { font-size: 1.2em; }
+            .gallery-img { width: 120px; height: 180px; }
+        }
+        .door {
+            position: fixed;
+            top: 0;
+            width: 50vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 9999;
+            transition: transform 1.5s cubic-bezier(.77,0,.18,1);
+            box-shadow: 0 0 30px 10px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+        .door-left {
+            left: 0;
+            border-right: 2px solid #b8860b;
+            transform: translateX(0);
+        }
+        .door-right {
+            right: 0;
+            border-left: 2px solid #b8860b;
+            transform: translateX(0);
+        }
+        .doors-open .door-left {
+            transform: translateX(-100%);
+        }
+        .doors-open .door-right {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hai cánh cửa -->
+    <img src="/static/doors/left.jpg" class="door door-left" alt="Cửa trái">
+    <img src="/static/doors/right.jpg" class="door door-right" alt="Cửa phải">
+    <!-- Frame 1: Thông tin + xác nhận -->
+    <section id="frame1">
+        <img src="/static/bg.JPG" class="frame-bg" alt="bg1">
+        <div class="frame-overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="main-card animate__animated animate__fadeInDown animate__faster" data-aos="fade-up">
+                        <div class="invite-section">
+                            <div class="invite-title">Thiệp mời tốt nghiệp</div>
+                            <div class="invite-subtitle">Phạm Gia Phong</div>
+                            <div class="invite-desc">Trân trọng kính mời bạn đến dự lễ tốt nghiệp của tôi</div>
+                            <div class="date-block">
+                                <div class="date-item">
+                                    <div class="label">Thứ Năm</div>
+                                    <div class="value">26</div>
+                                </div>
+                                <div class="date-item">
+                                    <div class="label">Tháng</div>
+                                    <div class="value">6</div>
+                                </div>
+                                <div class="date-item">
+                                    <div class="label">Năm</div>
+                                    <div class="value">2025</div>
+                                </div>
+                                <div class="date-item">
+                                    <div class="label">Giờ</div>
+                                    <div class="value">08:00</div>
+                                </div>
+                            </div>
+                            <div class="location-block">
+                                <span class="label">Tại Đại học Thủy Lợi</span>
+                            </div>
+                            <div class="owner-block">Rất mong được đón tiếp!</div>
+                            <div class="block animate__animated animate__fadeInUp animate__delay-1s" data-aos="fade-up" data-aos-delay="200">
+                                <div class="block-title">Xác nhận tham dự</div>
+                                <form class="rsvp-form">
+                                    <div class="mb-2">
+                                        <input type="text" class="form-control" placeholder="Tên của bạn" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <select class="form-control" required>
+                                            <option value="">Bạn sẽ tham dự chứ?</option>
+                                            <option value="yes">Có, tôi sẽ đến</option>
+                                            <option value="no">Xin lỗi, tôi không tham dự được</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <select class="form-control" required>
+                                            <option value="1">1 người</option>
+                                            <option value="2">2 người</option>
+                                            <option value="3">3 người</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-main">Xác nhận</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="scroll-down" onclick="document.getElementById('frame2').scrollIntoView({behavior: 'smooth'});">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Frame 2: Giới thiệu bản thân -->
+    <section id="frame2">
+        <img src="/static/bg2.jpg" class="frame-bg" alt="bg2">
+        <div class="frame-overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="intro-card animate__animated animate__fadeInUp animate__delay-1s" data-aos="fade-up">
+                        <div class="intro-title">Giới thiệu bản thân</div>
+                        <div class="intro-caption">
+                            Xin chào! Mình là Phạm Gia Phong, sinh viên Đại học Thủy Lợi. Mình luôn nỗ lực học hỏi, yêu thích công nghệ và đam mê khám phá những điều mới mẻ. Lễ tốt nghiệp này là cột mốc quan trọng, đánh dấu hành trình trưởng thành và mở ra những cơ hội mới. Rất mong được gặp lại các bạn trong ngày đặc biệt này!
+                        </div>
+                        <div class="scroll-down" onclick="document.getElementById('frame3').scrollIntoView({behavior: 'smooth'});">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Frame 3: Gallery ảnh cá nhân -->
+    <section id="frame3">
+        <img src="/static/bg3.jpg" class="frame-bg" alt="bg3">
+        <div class="frame-overlay"></div>
+        <div class="gallery-card animate__animated animate__fadeInUp animate__delay-1s" data-aos="fade-up">
+            <div class="gallery-title">Khoảnh khắc cá nhân</div>
+            <div class="gallery-list" id="gallery-slider">
+                <div class="gallery-track" id="gallery-track">
+                    <img src="/static/gallery/1.jpg" class="gallery-img" alt="Ảnh cá nhân 1">
+                    <img src="/static/gallery/2.jpg" class="gallery-img" alt="Ảnh cá nhân 2">
+                    <img src="/static/gallery/3.jpg" class="gallery-img" alt="Ảnh cá nhân 3">
+                    <img src="/static/gallery/4.jpg" class="gallery-img" alt="Ảnh cá nhân 4">
+                    <img src="/static/gallery/5.jpg" class="gallery-img" alt="Ảnh cá nhân 5">
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true });
+        // Hiệu ứng mở cửa khi cuộn
+        function openDoors() {
+            document.body.classList.add('doors-open');
+        }
+        let doorsOpened = false;
+        window.addEventListener('scroll', function() {
+            if (!doorsOpened && window.scrollY > 1) {
+                openDoors();
+                doorsOpened = true;
+            }
+        });
+        // Gallery slider animation - dịch chuyển cả track
+        const track = document.getElementById('gallery-track');
+        const imgs = track.querySelectorAll('.gallery-img');
+        let current = 0;
+        function updateGallery() {
+            // Dịch chuyển track để 3 ảnh giữa nằm trong vùng nhìn thấy
+            track.style.transform = `translateX(-${current * 30}vw)`;
+            imgs.forEach((img, i) => {
+                img.classList.remove('center');
+                if (i === (current + 1) % imgs.length) img.classList.add('center');
+            });
+        }
+        updateGallery();
+        setInterval(() => {
+            current = (current + 1) % imgs.length;
+            updateGallery();
+        }, 2200);
+    </script>
+</body>
+</html> 
