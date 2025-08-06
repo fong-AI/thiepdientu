@@ -1,56 +1,36 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
-from flask_mail import Mail, Message
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+import gspread
+from google.oauth2.service_account import Credentials
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key')
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.getenv('EMAIL_USER')
-app.config['MAIL_PASSWORD'] = os.getenv('EMAIL_PASS')
+app.secret_key = 'your-secret-key'
 
-mail = Mail(app)
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
+]
+CREDENTIALS_FILE = 'google-credentials.json'
+SHEET_NAME = 'ThongtinthamduTN'
+TAB_NAME = 'Trang tính1'
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        sender_name = request.form.get('sender_name')
-        recipient_email = request.form.get('recipient_email')
-        graduation_date = request.form.get('graduation_date')
-        graduation_time = request.form.get('graduation_time')
-        location = request.form.get('location')
-        message = request.form.get('message')
-
-        try:
-            # Tạo nội dung email HTML
-            html_content = render_template(
-                'email_template.html',
-                sender_name=sender_name,
-                graduation_date=graduation_date,
-                graduation_time=graduation_time,
-                location=location,
-                message=message
-            )
-
-            # Gửi email
-            msg = Message(
-                'Thư mời dự lễ tốt nghiệp',
-                sender=app.config['MAIL_USERNAME'],
-                recipients=[recipient_email]
-            )
-            msg.html = html_content
-            mail.send(msg)
-            
-            flash('Thư mời đã được gửi thành công!', 'success')
+        rsvp_name = request.form.get('rsvp_name')
+        rsvp_attend = request.form.get('rsvp_attend')
+        rsvp_people = request.form.get('rsvp_people')
+        if rsvp_name and rsvp_attend and rsvp_people:
+            try:
+                creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=SCOPES)
+                gc = gspread.authorize(creds)
+                sh = gc.open(SHEET_NAME)
+                worksheet = sh.worksheet(TAB_NAME)
+                worksheet.append_row([rsvp_name, rsvp_attend, rsvp_people])
+                flash('Thông tin xác nhận đã được lưu thành công!', 'success')
+            except Exception as e:
+                flash(f'Không thể lưu vào Google Sheets: {str(e)}', 'error')
             return redirect(url_for('home'))
-        except Exception as e:
-            flash(f'Có lỗi xảy ra: {str(e)}', 'error')
-
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True)

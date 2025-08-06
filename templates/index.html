@@ -197,6 +197,17 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
             margin-bottom: 1.5em;
         }
+        /* Ảnh giới thiệu ở frame 2 */
+        #frame2 .intro-img {
+            display: block;
+            margin: 32px auto 0 auto;
+            width: 320px;
+            max-width: 90vw;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+        }
         /* Frame 3: Gallery */
         #frame3 .gallery-card {
             width: 100vw;
@@ -429,19 +440,19 @@
                             <div class="owner-block">Rất mong được đón tiếp!</div>
                             <div class="block animate__animated animate__fadeInUp animate__delay-1s" data-aos="fade-up" data-aos-delay="200">
                                 <div class="block-title">Xác nhận tham dự</div>
-                                <form class="rsvp-form">
+                                <form class="rsvp-form" method="POST">
                                     <div class="mb-2">
-                                        <input type="text" class="form-control" placeholder="Tên của bạn" required>
+                                        <input type="text" class="form-control" name="rsvp_name" placeholder="Tên của bạn" required>
                                     </div>
                                     <div class="mb-2">
-                                        <select class="form-control" required>
+                                        <select class="form-control" name="rsvp_attend" required>
                                             <option value="">Bạn sẽ tham dự chứ?</option>
                                             <option value="yes">Có, tôi sẽ đến</option>
                                             <option value="no">Xin lỗi, tôi không tham dự được</option>
                                         </select>
                                     </div>
                                     <div class="mb-2">
-                                        <select class="form-control" required>
+                                        <select class="form-control" name="rsvp_people" required>
                                             <option value="1">1 người</option>
                                             <option value="2">2 người</option>
                                             <option value="3">3 người</option>
@@ -471,6 +482,7 @@
                         <div class="intro-caption">
                             Xin chào! Mình là Phạm Gia Phong, sinh viên Đại học Thủy Lợi. Mình luôn nỗ lực học hỏi, yêu thích công nghệ và đam mê khám phá những điều mới mẻ. Lễ tốt nghiệp này là cột mốc quan trọng, đánh dấu hành trình trưởng thành và mở ra những cơ hội mới. Rất mong được gặp lại các bạn trong ngày đặc biệt này!
                         </div>
+                        <img src="/static/gioithieu/intro.jpg" alt="Ảnh giới thiệu" class="intro-img">
                         <div class="scroll-down" onclick="document.getElementById('frame3').scrollIntoView({behavior: 'smooth'});">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                         </div>
