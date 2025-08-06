@@ -2,6 +2,15 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 import gspread
 from google.oauth2.service_account import Credentials
 
+import os
+
+GOOGLE_CREDENTIALS_ENV = os.environ.get('GOOGLE_CREDENTIALS')
+CREDENTIALS_FILE = 'google-credentials.json'
+
+if GOOGLE_CREDENTIALS_ENV and not os.path.exists(CREDENTIALS_FILE):
+    with open(CREDENTIALS_FILE, 'w') as f:
+        f.write(GOOGLE_CREDENTIALS_ENV)
+
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 
