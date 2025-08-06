@@ -3,3 +3,4 @@ Flask-Mail==0.9.1
 python-dotenv==0.19.0 
 gspread 
 google-auth
+werkzeug==2.3.8
