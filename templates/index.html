@@ -274,33 +274,6 @@
             .owner-block { font-size: 1.2em; }
             .gallery-img { width: 120px; height: 180px; }
         }
-        .door {
-            position: fixed;
-            top: 0;
-            width: 50vw;
-            height: 100vh;
-            object-fit: cover;
-            z-index: 9999;
-            transition: transform 1.5s cubic-bezier(.77,0,.18,1);
-            box-shadow: 0 0 30px 10px rgba(0,0,0,0.2);
-            pointer-events: none;
-        }
-        .door-left {
-            left: 0;
-            border-right: 2px solid #b8860b;
-            transform: translateX(0);
-        }
-        .door-right {
-            right: 0;
-            border-left: 2px solid #b8860b;
-            transform: translateX(0);
-        }
-        .doors-open .door-left {
-            transform: translateX(-100%);
-        }
-        .doors-open .door-right {
-            transform: translateX(100%);
-        }
         /* Gallery slider frame 3 - 3 ảnh chiếm 90% chiều rộng, slide mượt */
         #frame3 .gallery-list {
             width: 100vw;
@@ -338,72 +311,9 @@
         #frame3 .gallery-img.center {
             box-shadow: 0 4px 24px rgba(0,0,0,0.18);
         }
-        .scroll-down {
-            position: absolute;
-            left: 50%;
-            bottom: 24px;
-            transform: translateX(-50%);
-            z-index: 10;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .scroll-down:hover {
-            background: #ffd700;
-        }
-        .scroll-down svg {
-            width: 28px;
-            height: 28px;
-            color: #4a90e2;
-        }
-        @media (max-width: 991.98px) {
-            .invite-title { font-size: 1.5em; }
-            .invite-subtitle { font-size: 1.2em; }
-            .date-block { gap: 10px; }
-            .date-item { padding: 10px 8px; min-width: 60px; }
-            .owner-block { font-size: 1.2em; }
-            .gallery-img { width: 120px; height: 180px; }
-        }
-        .door {
-            position: fixed;
-            top: 0;
-            width: 50vw;
-            height: 100vh;
-            object-fit: cover;
-            z-index: 9999;
-            transition: transform 1.5s cubic-bezier(.77,0,.18,1);
-            box-shadow: 0 0 30px 10px rgba(0,0,0,0.2);
-            pointer-events: none;
-        }
-        .door-left {
-            left: 0;
-            border-right: 2px solid #b8860b;
-            transform: translateX(0);
-        }
-        .door-right {
-            right: 0;
-            border-left: 2px solid #b8860b;
-            transform: translateX(0);
-        }
-        .doors-open .door-left {
-            transform: translateX(-100%);
-        }
-        .doors-open .door-right {
-            transform: translateX(100%);
-        }
     </style>
 </head>
 <body>
-    <!-- Hai cánh cửa -->
-    <img src="/static/doors/left.jpg" class="door door-left" alt="Cửa trái">
-    <img src="/static/doors/right.jpg" class="door door-right" alt="Cửa phải">
     <!-- Frame 1: Thông tin + xác nhận -->
     <section id="frame1">
         <img src="/static/bg.jpg" class="frame-bg" alt="bg1">
@@ -512,17 +422,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ once: true });
-        // Hiệu ứng mở cửa khi cuộn
-        function openDoors() {
-            document.body.classList.add('doors-open');
-        }
-        let doorsOpened = false;
-        window.addEventListener('scroll', function() {
-            if (!doorsOpened && window.scrollY > 1) {
-                openDoors();
-                doorsOpened = true;
-            }
-        });
         // Gallery slider animation - dịch chuyển cả track
         const track = document.getElementById('gallery-track');
         const imgs = track.querySelectorAll('.gallery-img');
@@ -542,4 +441,4 @@
         }, 2200);
     </script>
 </body>
-</html> 
+</html>
