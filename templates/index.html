@@ -324,8 +324,8 @@
             .date-block { gap: 10px; }
             .date-item { padding: 10px 8px; min-width: 60px; }
             .owner-block { font-size: 1.2em; }
-            /* Tránh cắt 2 bên ảnh nền trên mobile: giữ nguyên toàn bộ ảnh */
-            #frame1 .frame-bg { object-fit: contain; background: #000; }
+            /* Ảnh nền mobile: fill màn hình để không bị co nhỏ */
+            #frame1 .frame-bg { object-fit: cover; object-position: 50% 30%; background: none; }
             /* Ảnh gallery trên mobile rộng hơn để đỡ bị hẹp */
             #frame3 .gallery-img { flex: 0 0 70vw; width: 70vw; height: auto; max-width: 70vw; max-height: 70vh; }
             #frame3 .gallery-list { height: 70vh; }
